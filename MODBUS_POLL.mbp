@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModbusPoll>
+   <FileSchema r="0" c="1"/>
+   <Version major="13" minor="0" patch="1" build="2535"/>
+   <dpi>96</dpi>
+   <WP left="0" right="1212" top="0" bottom="438" ShowCmd="3" MaxPosX="-8" MaxPosY="-31" MinPosX="-1" MinPosY="-1"/>
+   <ScanRate>1000</ScanRate>
+   <SlaveID>1</SlaveID>
+   <Enable>1</Enable>
+   <StopOnError>0</StopOnError>
+   <OneBased>0</OneBased>
+   <RowsDialog>0</RowsDialog>
+   <HideNames>0</HideNames>
+   <HexMode>0</HexMode>
+   <DisplayAddr>0</DisplayAddr>
+   <ColCount>4</ColCount>
+   <RowCount>10</RowCount>
+   <ColumnWidth>
+      <CW>900</CW>
+      <CW>900</CW>
+      <CW>900</CW>
+      <CW>900</CW>
+   </ColumnWidth>
+   <RowHight>
+      <RH>200</RH>
+      <RH>200</RH>
+      <RH>200</RH>
+      <RH>200</RH>
+      <RH>200</RH>
+      <RH>200</RH>
+      <RH>200</RH>
+      <RH>200</RH>
+      <RH>200</RH>
+      <RH>200</RH>
+   </RowHight>
+   <ScrollPosV>0</ScrollPosV>
+   <ScrollPosH>0</ScrollPosH>
+   <FocusRow>8</FocusRow>
+   <FocusCol>3</FocusCol>
+   <LogText>
+      <Eachread>0</Eachread>
+      <Rate>1</Rate>
+      <LogChangedOnly>0</LogChangedOnly>
+      <LogErrors>0</LogErrors>
+      <LogErrorsOnly>0</LogErrorsOnly>
+      <LogAddress>1</LogAddress>
+      <LogDate>0</LogDate>
+      <TDelimiter>0</TDelimiter>
+      <LogMs>1</LogMs>
+      <Delimiter>0</Delimiter>
+      <AutoStart>0</AutoStart>
+      <Flush>0</Flush>
+      <Append>0</Append>
+      <NewLogFileAtMidnight>0</NewLogFileAtMidnight>
+      <InsertHeader>0</InsertHeader>
+      <NameCellsInTopRow>0</NameCellsInTopRow>
+      <PollDefinition>0</PollDefinition>
+      <LogName>Type log name here</LogName>
+      <FileName></FileName>
+   </LogText>
+   <LogExcel>
+      <Eachread>1</Eachread>
+      <Rate>1</Rate>
+      <StopAfter>1000</StopAfter>
+      <LogChangedOnly>0</LogChangedOnly>
+      <InsertHeader>1</InsertHeader>
+      <NameCellsInTopRow>1</NameCellsInTopRow>
+      <PollDefinition>1</PollDefinition>
+      <LogName>Type log name here</LogName>
+   </LogExcel>
+   <Data>
+      <Function>3</Function>
+      <Address>0</Address>
+      <Quantity>20</Quantity>
+      <EnronMode>0</EnronMode>
+      <Formats>
+         <F f="0" v="0"/>
+         <F f="0" v="535"/>
+         <F f="0" v="89"/>
+         <F f="0" v="27"/>
+         <F f="0" v="34"/>
+         <F f="0" v="38"/>
+         <F f="0" v="1483"/>
+         <F f="0" v="3"/>
+         <F f="0" v="261"/>
+         <F f="0" v="50"/>
+         <F f="0" v="15"/>
+         <F f="0" v="5"/>
+         <F f="0" v="2"/>
+         <F f="0" v="1"/>
+         <F f="0" v="0"/>
+         <F f="0" v="0"/>
+         <F f="0" v="0"/>
+         <F f="0" v="1"/>
+         <F f="0" v="0"/>
+         <F f="0" v="0"/>
+      </Formats>
+      <Bytes>
+         <B>0</B>
+         <B>0</B>
+         <B>23</B>
+         <B>2</B>
+         <B>89</B>
+         <B>0</B>
+         <B>27</B>
+         <B>0</B>
+         <B>34</B>
+         <B>0</B>
+         <B>38</B>
+         <B>0</B>
+         <B>203</B>
+         <B>5</B>
+         <B>3</B>
+         <B>0</B>
+         <B>5</B>
+         <B>1</B>
+         <B>50</B>
+         <B>0</B>
+         <B>15</B>
+         <B>0</B>
+         <B>5</B>
+         <B>0</B>
+         <B>2</B>
+         <B>0</B>
+         <B>1</B>
+         <B>0</B>
+         <B>0</B>
+         <B>0</B>
+         <B>0</B>
+         <B>0</B>
+         <B>0</B>
+         <B>0</B>
+         <B>1</B>
+         <B>0</B>
+         <B>0</B>
+         <B>0</B>
+         <B>0</B>
+         <B>0</B>
+      </Bytes>
+      <CellData>
+         <Cell idx="0">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>TURBIDITY</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="1">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>pH</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="2">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>TDS</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="3">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>PM1</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="4">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>PM2.5</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="5">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>PM10</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="6">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>CO2</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="7">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>VOC</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="8">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>TEMP</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="9">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>HUM</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="10">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>CH2O</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="11">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>CO</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="12">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>O3</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="13">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>NO2</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="14">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>VALUE=0</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="15">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>VALUE=0</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="16">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>VALUE=0</Name>
+            <Font used="false"/>
+         </Cell>
+         <Cell idx="17">
+            <Colors/>
+            <Compare compare1="0" compare2="0" conditional1="0" conditional2="0"/>
+            <Name>VALUE=1</Name>
+            <Font used="false"/>
+         </Cell>
+      </CellData>
+      <Scales/>
+      <ValueNames/>
+      <ChartSeries/>
+      <BinNames/>
+   </Data>
+</ModbusPoll>
