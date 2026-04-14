@@ -1,4 +1,4 @@
-// ================= UART =================
+// ================= UART ================= // vesrion 1
 HardwareSerial SensorSerial (PA10, PA9);
 HardwareSerial RS485Serial(PA3, PA2);
 
