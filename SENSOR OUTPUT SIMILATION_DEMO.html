@@ -62,35 +62,48 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);}
 .reg-unit{font-size:9px;color:var(--text3);}
 .reg-raw{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);min-width:52px;text-align:right;}
 
-/* ── DIAGNOSTIC CARDS ── */
+/* ── DIAG CARDS ── */
 .diag-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;}
 .diag-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px;}
 .diag-title{font-size:9px;font-weight:700;letter-spacing:0.12em;color:var(--text2);margin-bottom:2px;}
-.diag-addr{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:10px;}
-.diag-main{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:600;color:var(--text);margin-bottom:4px;}
-.diag-sub{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);}
+.diag-addr{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:8px;}
 
-/* binary visualiser */
+/* value row: big dec + hex side by side */
+.val-row{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;}
+.val-dec{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:700;line-height:1;}
+.val-dec.vc-ok{color:var(--green);}
+.val-dec.vc-fault{color:var(--red);}
+.val-dec.vc-warn{color:var(--amber);}
+.val-dec.vc-blue{color:var(--blue);}
+.val-dec.vc-gray{color:var(--text2);}
+.val-right{display:flex;flex-direction:column;gap:3px;}
+.val-hex{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2);}
+.val-bin{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:0.05em;}
+
+/* bit boxes */
 .bin-row{display:flex;gap:3px;margin-bottom:8px;align-items:flex-end;}
 .bit-block{display:flex;flex-direction:column;align-items:center;gap:2px;}
 .bit-idx{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text3);}
-.bit-box{width:16px;height:16px;border-radius:3px;border:1px solid;display:flex;align-items:center;justify-content:center;}
-.bit-box-on-ok{background:#00e5a022;border-color:#00e5a055;}
-.bit-box-on-fault{background:#ff4d5e22;border-color:#ff4d5e55;}
-.bit-box-off{background:var(--bg3);border-color:var(--border);}
-.bit-inner{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;}
-.bit-inner-ok{color:var(--green);}
-.bit-inner-fault{color:var(--red);}
-.bit-inner-off{color:var(--text3);}
-.bit-sep{width:1px;height:16px;background:var(--border2);margin:0 2px;align-self:flex-end;}
+.bit-box{width:17px;height:17px;border-radius:3px;border:1px solid;display:flex;align-items:center;justify-content:center;}
+.bb-on-ok{background:#00e5a022;border-color:#00e5a066;}
+.bb-on-fault{background:#ff4d5e22;border-color:#ff4d5e66;}
+.bb-off{background:var(--bg3);border-color:var(--border);}
+.bi{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;}
+.bi-ok{color:var(--green);}
+.bi-fault{color:var(--red);}
+.bi-off{color:var(--text3);}
+.bit-sep{width:1px;height:17px;background:var(--border2);margin:0 2px;align-self:flex-end;}
 
-/* bit legend pills */
+/* pills */
 .bits-wrap{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
 .bpill{font-size:9px;font-family:'JetBrains Mono',monospace;padding:2px 6px;border-radius:20px;display:flex;align-items:center;gap:3px;}
 .bpill-ok{background:#00e5a012;color:var(--green);border:1px solid #00e5a025;}
 .bpill-fault{background:#ff4d5e12;color:var(--red);border:1px solid #ff4d5e25;}
 .bpill-off{background:var(--bg3);color:var(--text3);border:1px solid var(--border);}
 .bit-num-tag{font-size:8px;opacity:0.6;}
+
+.diag-main{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.diag-sub{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);}
 
 .scene-section{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px;}
 .scene-hdr{font-size:9px;font-weight:700;letter-spacing:0.12em;color:var(--text2);margin-bottom:10px;}
@@ -226,37 +239,32 @@ function regRow(def,val){
   return `<div class="${rowCls}"><div class="reg-left"><span class="reg-num">R${String(def.a).padStart(2,'0')}</span><span class="reg-nm">${def.n}</span><div class="${pip}"></div></div><div class="reg-right"><span class="${valCls}">${display}</span><span class="reg-unit">${isFault||isStale?'':def.u}</span><span class="reg-raw">${rawStr}</span></div></div>`;
 }
 
-/* ── binary visualiser with bit indices ── */
-function binVisual(val, bitDefs, isOkRegister){
-  // bitDefs = [{b:bitNum, l:label, important:bool}]
-  // renders bits 7 down to 0, highlights only defined bits
-  const definedBits=new Set(bitDefs.map(x=>x.b));
-  const labelMap={};bitDefs.forEach(x=>labelMap[x.b]=x.l);
+function toBinStr(val){
+  return val.toString(2).padStart(8,'0').split('').join(' ');
+}
 
+function binVisual(val,bitDefs,isOkReg){
+  const defined=new Set(bitDefs.map(x=>x.b));
   let html='<div class="bin-row">';
-  // bits 7..0
   for(let b=7;b>=0;b--){
     const set=(val>>b)&1;
-    const defined=definedBits.has(b);
+    const def=defined.has(b);
     let boxCls,innerCls;
-    if(!defined){boxCls='bit-box bit-box-off';innerCls='bit-inner bit-inner-off';}
-    else if(isOkRegister){
-      boxCls=set?'bit-box bit-box-on-ok':'bit-box bit-box-on-fault';
-      innerCls=set?'bit-inner bit-inner-ok':'bit-inner bit-inner-fault';
+    if(!def){boxCls='bit-box bb-off';innerCls='bi bi-off';}
+    else if(isOkReg){
+      boxCls=set?'bit-box bb-on-ok':'bit-box bb-on-fault';
+      innerCls=set?'bi bi-ok':'bi bi-fault';
     } else {
-      // fault register: set = bad
-      boxCls=set?'bit-box bit-box-on-fault':'bit-box bit-box-on-ok';
-      innerCls=set?'bit-inner bit-inner-fault':'bit-inner bit-inner-ok';
+      boxCls=set?'bit-box bb-on-fault':'bit-box bb-on-ok';
+      innerCls=set?'bi bi-fault':'bi bi-ok';
     }
     html+=`<div class="bit-block"><span class="bit-idx">b${b}</span><div class="${boxCls}"><span class="${innerCls}">${set}</span></div></div>`;
     if(b===4) html+='<div class="bit-sep"></div>';
   }
-  html+='</div>';
-  return html;
+  return html+'</div>';
 }
 
-/* ── bit legend pills with bit number tag ── */
-function bitPills(val, bitsArr, inv){
+function bitPills(val,bitsArr,inv){
   return bitsArr.map(b=>{
     const set=(val>>b.b)&1;
     const ok=inv?!set:!!set;
@@ -266,54 +274,69 @@ function bitPills(val, bitsArr, inv){
 
 function renderDiag(regs){
   const st=regs[14],fc=regs[18],age=regs[17],up=(regs[16]<<16)|regs[15];
-
-  // STATUS bits — set = healthy
-  const bits14=[
-    {b:7,l:'Running'},
-    {b:4,l:'ADC OK'},
-    {b:3,l:'Turb OK'},
-    {b:2,l:'TDS OK'},
-    {b:1,l:'pH OK'},
-    {b:0,l:'Air OK'}
-  ];
-  // FAULT CODE bits — set = fault
-  const bits18=[
-    {b:4,l:'ADC'},
-    {b:3,l:'Air'},
-    {b:2,l:'Turb'},
-    {b:1,l:'TDS'},
-    {b:0,l:'pH'}
-  ];
+  const bits14=[{b:7,l:'Running'},{b:4,l:'ADC OK'},{b:3,l:'Turb OK'},{b:2,l:'TDS OK'},{b:1,l:'pH OK'},{b:0,l:'Air OK'}];
+  const bits18=[{b:4,l:'ADC'},{b:3,l:'Air'},{b:2,l:'Turb'},{b:1,l:'TDS'},{b:0,l:'pH'}];
 
   const stHex='0x'+st.toString(16).toUpperCase().padStart(4,'0');
   const fcHex='0x'+fc.toString(16).toUpperCase().padStart(4,'0');
-  const ageColor=age===0?'var(--green)':age>30?'var(--red)':'var(--amber)';
+  const ageColor=age===0?'vc-ok':age>30?'vc-fault':'vc-warn';
+  const anyFault=Object.values(S.faults).some(v=>v);
+  const stColor=S.warmup?'vc-warn':anyFault?'vc-fault':'vc-ok';
+  const fcColor=fc===0?'vc-ok':'vc-fault';
 
   document.getElementById('diag-row').innerHTML=`
 <div class="diag-card">
   <div class="diag-title">STATUS REGISTER</div>
-  <div class="diag-addr">REG 14 · ${stHex} (dec ${st})</div>
+  <div class="diag-addr">REG 14 · 1=healthy · 0=fault</div>
+  <div class="val-row">
+    <span class="val-dec ${stColor}">${st}</span>
+    <div class="val-right">
+      <span class="val-hex">${stHex}</span>
+      <span class="val-bin">${toBinStr(st)}</span>
+    </div>
+  </div>
   ${binVisual(st,bits14,true)}
   <div class="bits-wrap">${bitPills(st,bits14,false)}</div>
 </div>
+
 <div class="diag-card">
   <div class="diag-title">FAULT CODE REGISTER</div>
-  <div class="diag-addr">REG 18 · ${fcHex} (dec ${fc})</div>
+  <div class="diag-addr">REG 18 · 1=fault · 0=clear</div>
+  <div class="val-row">
+    <span class="val-dec ${fcColor}">${fc}</span>
+    <div class="val-right">
+      <span class="val-hex">${fcHex}</span>
+      <span class="val-bin">${toBinStr(fc)}</span>
+    </div>
+  </div>
   ${binVisual(fc,bits18,false)}
   <div class="bits-wrap">${bitPills(fc,bits18,true)}</div>
 </div>
+
 <div class="diag-card">
   <div class="diag-title">UPTIME</div>
   <div class="diag-addr">REG 15 (LO) + REG 16 (HI)</div>
-  <div class="diag-main">${up}s</div>
-  <div class="diag-sub">LO word: ${regs[15]} &nbsp;·&nbsp; HI word: ${regs[16]}</div>
-  <div class="diag-sub" style="margin-top:4px;">combined = (HI × 65536) + LO</div>
+  <div class="val-row">
+    <span class="val-dec vc-blue">${up}</span>
+    <div class="val-right">
+      <span class="val-hex">seconds</span>
+      <span class="val-bin">LO:${regs[15]}  HI:${regs[16]}</span>
+    </div>
+  </div>
+  <div class="diag-sub">combined = (HI × 65536) + LO</div>
 </div>
+
 <div class="diag-card">
   <div class="diag-title">DATA AGE</div>
   <div class="diag-addr">REG 17 · fault cycle counter</div>
-  <div class="diag-main" style="color:${ageColor}">${age}</div>
-  <div class="diag-sub">${age===0?'all clear — fresh data':age>30?'STALE — sensor dead':'fault active · '+age+' cycles'}</div>
+  <div class="val-row">
+    <span class="val-dec ${ageColor}">${age}</span>
+    <div class="val-right">
+      <span class="val-hex">cycles</span>
+      <span class="val-bin">${age===0?'all clear':age>30?'sensor dead':'fault active'}</span>
+    </div>
+  </div>
+  <div class="diag-sub">${age===0?'fresh data — no fault':'~'+age*2+'s of continuous fault'}</div>
 </div>`;
 }
 
